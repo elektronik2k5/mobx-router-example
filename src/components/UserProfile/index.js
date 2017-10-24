@@ -5,10 +5,9 @@ import views from 'config/views';
 
 class UserProfile extends Component {
   render() {
-
-    const {store} = this.props;
-    const {router:{params, goTo}} = store;
-
+    const { store, } = this.props
+    const { goTo, snapshot: { params, }, } = store.router
+    
     const tabs = [
       {
         name: 'Articles',

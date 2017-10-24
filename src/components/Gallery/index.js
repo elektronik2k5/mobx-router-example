@@ -4,9 +4,7 @@ import _ from 'lodash';
 
 class Gallery extends Component {
   render() {
-    const {store} = this.props;
-    const {router:{queryParams}} = store;
-
+    const { queryParams, } = this.props.store.router.snapshot
     return (
       <div>
         <h3>Gallery</h3>

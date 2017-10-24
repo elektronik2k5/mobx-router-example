@@ -1,13 +1,10 @@
-import React, {Component} from 'react';
-import {observer} from 'mobx-react';
+import React, { Component, } from 'react'
+import { observer, inject, } from 'mobx-react'
 
-//style
+
 class Document extends Component {
-  render() {
-
-    const {store}= this.props;
-    const {router: {params}} = store;
-
+  render(){
+    const { params, } = this.props.store.router.snapshot
     return (
       <div>
         <h3> Document </h3>
@@ -17,4 +14,4 @@ class Document extends Component {
   }
 }
 
-export default observer(['store'], Document);
+export default inject('store')(observer(Document))
