@@ -1,4 +1,4 @@
-import AppStore from 'mobx/stores/app-store';
+import AppStore from '../mobx/stores/app-store';
 // import {RouterStore} from 'mobx-router';
 import { types, getSnapshot, } from 'mobx-state-tree';
 import { toJS, } from 'mobx'

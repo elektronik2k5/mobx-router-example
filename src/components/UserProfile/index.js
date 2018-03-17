@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
-import {observer} from 'mobx-react';
-import views from 'config/views';
+import { inject, observer, } from 'mobx-react';
+import views from '../../config/views';
 
 class UserProfile extends Component {
   render() {
@@ -25,9 +25,7 @@ class UserProfile extends Component {
 
     return (
       <div>
-
         <h1> User profile for: {params.username} </h1>
-
         <h3> Friends: </h3>
         <ul>
           <li>
@@ -84,4 +82,4 @@ class UserProfile extends Component {
   }
 }
 
-export default observer(['store'], UserProfile);
+export default inject('store')(observer(UserProfile));
