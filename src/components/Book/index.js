@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import { inject, observer, } from 'mobx-react';
+import { toJS, } from 'mobx'
 
 class Book extends Component {
   render() {
-    const {store} = this.props;
-    const {router: {params}} = store;
-
+    const params = toJS(this.props.store.router.params)
     return (
       <div>
         <h1> Book {params.id} </h1>
