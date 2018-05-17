@@ -1,26 +1,40 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { inject, observer, } from 'mobx-react';
 import {Link} from 'mobx-router';
 import views from '../../config/views';
 import _ from 'lodash';
 
-class Gallery extends Component {
-  render() {
-    const {store} = this.props;
-    const { queryParams, } = this.props.store.router.snapshot
-    return (
-      <div>
-        <h3>Gallery</h3>
-        {!_.isEmpty(queryParams) && <ul>
-          {_.map(queryParams, (param, key) => <li key={key}><span>{key}</span> - <b>{param}</b></li>)}
-        </ul>
-        }
-        <Link view={views.gallery} store={store} queryParams={{}}>
-          Go to gallery, empty queryParams
-        </Link>
-      </div>
-    );
-  }
+
+function Gallery({ store, }) {
+  const { queryParams, } = store.router.snapshot
+  const LinkWithStart = ({ start, }) => (
+    <li>
+      <Link {...{
+        view: views.gallery,
+        store,
+        queryParams: start ? { start, } : {},
+        children: `Go to gallery, ${ start ? 'start at ' + start : 'empty queryParams' }`,
+      }} />
+    </li>
+  )
+  return (
+    <React.Fragment>
+      <h3>Gallery</h3>
+      {
+        !_.isEmpty(queryParams) && (
+          <ol>
+            {_.map(queryParams, (param, key) => <li key={key}>{key} - <b>{param}</b></li>)}
+          </ol>
+        )
+      }
+      <h4>Links</h4>
+      <ul>
+        <LinkWithStart />
+        <LinkWithStart {...{ start: '10', }} />
+        <LinkWithStart {...{ start: '1000', }} />
+      </ul>
+    </React.Fragment>
+  )
 }
 
-export default inject('store')(observer(Gallery));
+export default inject('store')(observer(Gallery))

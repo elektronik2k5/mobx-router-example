@@ -42,16 +42,21 @@ const RouterStore = types.model('RouterStore', {
       return;
     }
 
-    rootViewChanged && self.currentView && self.currentView.onExit && self.currentView.onExit(self.currentView, currentParams, store, currentQueryParams);
+    const nextParams = toJS(paramsObj);
+    const nextQueryParams = toJS(queryParamsObj);
+    const onParamsChangeResult = (!rootViewChanged && self.currentView && self.currentView.onParamsChange) ?
+      self.currentView.onParamsChange(self.currentView, nextParams, store, nextQueryParams) : true
+    if (onParamsChangeResult === false) {
+      return;
+    }
 
+    rootViewChanged && self.currentView && self.currentView.onExit && self.currentView.onExit(self.currentView, currentParams, store, currentQueryParams);
+    
     self.currentView = view
     self.params = toJS(paramsObj)
     self.queryParams = toJS(queryParamsObj);
-    const nextParams = toJS(paramsObj);
-    const nextQueryParams = toJS(queryParamsObj);
-
+    
     rootViewChanged && view.onEnter && view.onEnter(view, nextParams, store, nextQueryParams);
-    !rootViewChanged && self.currentView && self.currentView.onParamsChange && self.currentView.onParamsChange(self.currentView, nextParams, store, nextQueryParams);
   }
 }))
 

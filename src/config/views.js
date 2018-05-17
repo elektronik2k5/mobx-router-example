@@ -32,6 +32,10 @@ const views = {
   gallery: new Route({
     path: '/gallery',
     component: <Gallery/>,
+    onParamsChange(oute, params, store){
+      console.info(...arguments)
+      return confirm('Are you sure you wanna enter the gallery again?')
+    },
     beforeExit: () => {
       const result = confirm('Are you sure you want to leave the gallery?');
       return result;
